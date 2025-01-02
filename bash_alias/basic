@@ -1,0 +1,32 @@
+#!/bin/bash
+
+# Ensure the script gets exactly one argument
+if [ "$#" -ne 1 ]; then
+    echo "Usage: $0 <filename>"
+    exit 1
+fi
+# Get the filename from the argument
+FILENAME="$1"
+# Function to clean up intermediate files
+cleanup() {
+    echo "Cleaning up intermediate files..."
+    rm -f *.o *.lst *.s
+}
+# Check if the file ends with .bas
+if [[ "$FILENAME" =~ \.bas$ ]]; then
+    NEWNAME="${FILENAME%.bas}.BAS"
+    mv "$FILENAME" "$NEWNAME" || { echo "Error renaming file."; exit 2; }
+    echo "Running BASICC against $NEWNAME..."
+    BASICC "$NEWNAME"
+    mv "$NEWNAME" "$FILENAME" || { echo "Error renaming file back."; exit 3; }
+    cleanup
+# Check if the file ends with .BAS
+elif [[ "$FILENAME" =~ \.BAS$ ]]; then
+    echo "Running BASICC against $FILENAME..."
+    BASICC "$FILENAME"
+    cleanup
+# Otherwise, raise an error
+else
+    echo "Error: File must end with .bas or .BAS"
+    exit 4
+fi
