@@ -1,0 +1,22 @@
+Before running make in this directory, please read below regarding needed dependencies:
+
+PdfLatex is a tool that converts Latex sources into PDF. It could be installed using Linux terminal.
+
+Installation commands are given below.
+
+Install the TexLive base
+sudo apt-get install texlive-latex-base
+
+Install the recommended and extra fonts to avoid running into some errors:
+sudo apt-get install texlive-fonts-recommended
+sudo apt-get install texlive-fonts-extra
+
+Install the extra packages:
+sudo apt-get install texlive-latex-extra
+
+Install qpdf and poppler-utils (to get pdf2ps)
+sudo apt-get install qpdf poppler-utils
+
+Once installed as above, you can run make within this directory:
+
+make
